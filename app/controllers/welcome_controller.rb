@@ -44,7 +44,7 @@ class WelcomeController < ApplicationController
   def list_containers
     p "*"*100 
     if(@a_token_id)
-    k = %x(curl –X GET -i  -H "X-Auth-Token:  #{@a_token_id}"   http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7?format=json)
+    k = %x(curl –X GET -i  -H "X-Auth-Token:  #{@a_token_id}"   http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7
     else
       @error_message= "Invalid token"
     end
