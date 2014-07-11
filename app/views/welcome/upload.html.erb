@@ -1,16 +1,26 @@
 <% if flash[:id_notice] %>
 <div class="notice"><%= flash[:id_notice] %></div>
   <% end %>
-<h6>Welcome to upload wizard!</h6>
-<%= form_tag({action: :upload}, multipart: true) do %>
-  TAG1:<%= text_field_tag 'tag1'%><br/>
-   TAG2 <%= text_field_tag "tag2"%><br/>
-    TAG3<%= text_field_tag "tag3"%><br/>
-    TAG4<%= text_field_tag "tag4"%><br/>
-  
-  <%= file_field_tag "doc"%>
-    <%= submit_tag%>
-<% end %>
+<h6>Welcome to Openstack- swift storage..!</h6>
 
+<% if(@containers["count"].to_i>0 %>
+  <%(@containers["count"].to_i).each do |x|%>
+<div class="row">
+  
+  <div class="panel panel-success">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=@containers["list"][x]["name"]%></h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div>
+  
+  
+</div>
+  <%end%>
+<%else%>
+
+<%end%>
 
 <%= @containers%>
