@@ -16,17 +16,12 @@ class WelcomeController < ApplicationController
     
     list_containers
     
-    
+    @containers
+    p @containers
     
     
   end
   
-  def upload_swift
-    p "$"*100
-    puts params 
-    redirect_to :back
-    
-  end
   
   private
   
@@ -46,7 +41,7 @@ class WelcomeController < ApplicationController
     if(@a_token_id)
     k = %x(curl –X GET -i  -H "X-Auth-Token:  #{@a_token_id}"   http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7?format=json)
     p k
-      k= JSON.parse(k)
+      parse_response(k)
     else
       @error_message= "Invalid token"
     end
@@ -70,7 +65,23 @@ class WelcomeController < ApplicationController
   def delete_object
   end
   
-  
+  def parse_response(data)
+    temparray = Array.new
+    @containers = Hash.new
+    data.each_line do |d|
+      temparray.push(d)
+      if(d.include?("Container-Count"))
+        @containers[:count] = d.split(":").last.to_i 
+      elsif(d.include?("Object-Count"))
+        @containers[:object_count] =d.split(":").last.to_i 
+      elsif(d.include?("Bytes-Used"))
+        @containers[:size] =d.split(":").last.to_i 
+      end
+    end
+    
+    @containers[:list] = JSON.parse(temparray.last)
+      
+  end
   
   
   
