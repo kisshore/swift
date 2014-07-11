@@ -1,3 +1,6 @@
+<% if flash[:id_notice] %>
+<div class="notice"><%= flash[:id_notice] %></div>
+  <% end %>
 <h6>Welcome to upload wizard!</h6>
 <%= form_tag({action: :upload}, multipart: true) do %>
   TAG1:<%= text_field_tag 'tag1'%><br/>
