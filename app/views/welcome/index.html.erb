@@ -1,0 +1,12 @@
+<h1>Welcome to Openstack swift testing app</h1>
+<p>Please Enter following credentials:</p>
+
+
+<%= form_for :user do |f|%>
+UserName : <%= f.text_field :username%>
+Tenant   : <%= f.text_field :tenant%>
+Password : <%= f.text_field :password%>
+<%= f.submit :submit%>
+<%end%>
+<br/><br/><br/>
+<a href="/upload" > "Enter As Test User" </a>
