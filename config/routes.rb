@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   
   post "/upload" => "welcome#upload_swift"
   
+  post "/create_container" => "welcome#create_container"
+  
+  get "/create_token" => "welcome#create_test_token"
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

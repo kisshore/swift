@@ -4,23 +4,37 @@ class WelcomeController < ApplicationController
   
   def index
   end
-  
-  def upload
-    
-    generate_token
+ 
+  def create_test_token
+       generate_token
       if(@a_token_id)
         flash[:id_notice]= "New authentication token has benn generated.!"
     else
       flash[:id_notice]= "Looks like there is an error.. unable to create authentication token, sorry.!"
     end
+    redirect_to :back
+  end
+  
+  
+  def upload
     
+ 
     list_containers
-    
-    @containers
+    @containers = {:list =>[{"name" =>"ki"},{"name"=>"su"}],:size =>200,:count =>3}
     p @containers
     
     
   end
+  
+  
+  
+  def create_container
+    p "rff"*40
+    flash[:id_notice]= "Container created!"
+    redirect_to :back
+  end
+  
+  
   
   
   private
@@ -50,8 +64,7 @@ class WelcomeController < ApplicationController
   end
   
   
-  def create_container
-  end
+  
   def list_objects
   end
   def create_object
