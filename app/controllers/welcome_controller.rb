@@ -47,6 +47,8 @@ class WelcomeController < ApplicationController
         a_token = %x(  curl -H "Content-Type: application/json" -d '{"auth":{"passwordCredentials":{"username":"swift","password":"root"},"tenantName":"service" }}' http://192.168.5.75:5000/v2.0/tokens )
         @a_token = JSON.parse(a_token) 
          @a_token_id = @a_token["access"]["token"]["id"]
+      
+      Authentications.create(:user => "test", :token => @a_token_id)
       p "token generated"+@a_token_id
     else
       p "************ Jim, your 192.168.5.75 is dead***************"
@@ -56,6 +58,7 @@ class WelcomeController < ApplicationController
   
   def list_containers
     p "**************Listing Containers*************"
+    @a_token_id = Authentications.where(:user => "test").last
     if(@a_token_id)
     k = %x(curl –X GET -i  -H "X-Auth-Token:  #{@a_token_id}"   http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7?format=json)
     p k
