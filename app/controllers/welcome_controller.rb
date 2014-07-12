@@ -34,7 +34,8 @@ class WelcomeController < ApplicationController
     
     @c_name =params.require(:container_name)
     p @c_name
-    @status= %x(curl –X PUT -i -H "X-Auth-Token: #{@a_token_id}"  http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7/#{@c_name})
+    @url_swift = "http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7/"+@c_name
+    @status= %x(curl –X PUT -i -H "X-Auth-Token: #{@a_token_id}" "#{@c_name}" )
     flash[:id_notice]= "Container created!"
     redirect_to :back
   end
