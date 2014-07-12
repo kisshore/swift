@@ -54,7 +54,8 @@ class WelcomeController < ApplicationController
     
     if(Net::Ping::External.new("192.168.5.75").ping?)
         p "192.168.5.75  is alive!"
-        a_token = %x(  curl -H "Content-Type: application/json" -d '{"auth":{"passwordCredentials":{"username":"swift","password":"root"},"tenantName":"service" }}' http://192.168.5.75:5000/v2.0/tokens )
+      @url_token ="http://192.168.5.75:5000/v2.0/tokens"
+        a_token = %x(  curl -H "Content-Type: application/json" -d '{"auth":{"passwordCredentials":{"username":"swift","password":"root"},"tenantName":"service" }}' "#{@url_token}" )
         @a_token = JSON.parse(a_token) 
          @a_token_id = @a_token["access"]["token"]["id"]
       
