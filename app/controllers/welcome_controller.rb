@@ -18,7 +18,7 @@ class WelcomeController < ApplicationController
   
   def upload
     
- 
+    @containers = {:list => [{"name" => "hello"},{"boblo" => "bai"}], :count => 2}
     list_containers
     @containers 
     p @containers
@@ -29,11 +29,18 @@ class WelcomeController < ApplicationController
   
   
   def create_container
-    p "rff"*40
+    p "**************CREATING CONTAINER---------------"
+      @a_token_id = Authentications.where(:user => "test").last.token
+    
+    @c_name =params.require(:container_name)
+    p @c_name
+    @status= %x(curl –X PUT -i -H "X-Auth-Token: #{@a_token_id}"  http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7/#{@c_name})
     flash[:id_notice]= "Container created!"
     redirect_to :back
   end
   
+   def delete_container
+  end
   
   
   
@@ -58,19 +65,23 @@ class WelcomeController < ApplicationController
   
   def list_containers
     p "**************Listing Containers*************"
-    @a_token_id = Authentications.where(:user => "test").last.token
-    if(@a_token_id)
-    k = %x(curl –X GET -i  -H "X-Auth-Token:  #{@a_token_id}"   http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7?format=json)
+     if(Net::Ping::External.new("192.168.5.75").ping?)
+        p "192.168.5.75  is alive!"
+        @a_token_id = Authentications.where(:user => "test").last.token
+        if(@a_token_id)
+          k = %x(curl –X GET -i  -H "X-Auth-Token:  #{@a_token_id}"   http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7?format=json)
+          p k
+          parse_response(k)
+        else
+          p  "Invalid token"
+        end
     p k
-      parse_response(k)
-    else
-      p  "Invalid token"
-    end
-    p k
-    p "*"*100 
+    p "*"*100
+     end
   end
   
   
+ 
   
   def list_objects
   end
@@ -79,8 +90,6 @@ class WelcomeController < ApplicationController
   def edit_container
   end
   def edit_object
-  end
-  def delete_container
   end
   def delete_object
   end
