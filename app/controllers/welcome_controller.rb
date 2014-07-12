@@ -20,7 +20,7 @@ class WelcomeController < ApplicationController
     
  
     list_containers
-    @containers = {:list =>[{"name" =>"ki"},{"name"=>"su"}],:size =>200,:count =>3}
+    @containers 
     p @containers
     
     
