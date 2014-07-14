@@ -40,6 +40,7 @@ class SwiftController < ApplicationController
           p x
         end
           
+        @containers = JSON.parse(cont_resp.body)
      
       puts "**"*40
     render "dashboard"
