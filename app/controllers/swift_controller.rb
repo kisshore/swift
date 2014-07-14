@@ -31,8 +31,13 @@ class SwiftController < ApplicationController
     puts cont_resp.class
     puts cont_resp.headers
     puts cont_resp.body
-      @cont_Array = Array.new(cont_resp.body)
-      @containers =Hash.new(cont_resp.body)
+      @cont_array = Array.new
+      @containers =Hash.new
+      cont_resp.body.each_line do |x|
+        p "Linessss............"
+        @cont_array.push(Hash.new(x))
+      end
+      
       p @cont_array
       puts @containers.class
         p @containers
