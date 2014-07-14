@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   
   get "/create_token" => "welcome#create_test_token"
   
+  get "/tester" => "welcome#tester"
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

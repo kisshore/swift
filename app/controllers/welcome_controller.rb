@@ -47,7 +47,7 @@ class WelcomeController < ApplicationController
   
   
   
-  private
+
   
   def generate_token
     p "****************************generating token****************"
@@ -116,7 +116,22 @@ class WelcomeController < ApplicationController
       
   end
   
-  
+  def tester
+     puts "**"*40 + "TESTING HTTPARTY!"
+    
+    resp = HTTParty.post("http://192.168.5.75:5000/v2.0/tokens",
+      {
+        :headers => {'Content-Type' => "application/json", "Accept" => "application/json"},
+        :body => {"auth" =>{"passwordCredentials" =>{"username" => "swift","password" =>"root"},"tenantName" =>"service" }}.to_json
+       })
+    
+    
+    puts resp
+    
+    
+    redirect_to :root
+    
+  end
   
   
 end
