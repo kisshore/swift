@@ -118,15 +118,35 @@ class WelcomeController < ApplicationController
   
   def tester
      puts "**"*40 + "TESTING HTTPARTY!"
-    
-    resp = HTTParty.post("http://192.168.5.75:5000/v2.0/tokens",
+    puts "****************** Generating Authenication token... ************"   
+    auth_resp = HTTParty.post("http://192.168.5.75:5000/v2.0/tokens",
       {
         :headers => {'Content-Type' => "application/json", "Accept" => "application/json"},
         :body => {"auth" =>{"passwordCredentials" =>{"username" => "swift","password" =>"root"},"tenantName" =>"service" }}.to_json
        })
     
+    puts auth_resp
+    puts auth_token = auth_resp["access"]["token"]["id"]
+     puts "**"*40
     
-    puts resp
+    puts "******************* Listing Containers ******************************"
+    
+    cont_resp = HTTParty.get("http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7?format=json",
+      {
+        :headers => {'X-Auth-Token' =>auth_token}
+        
+      })
+    puts cont_resp
+    
+     puts "**"*40
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     redirect_to :root
