@@ -34,6 +34,7 @@ class SwiftController < ApplicationController
       
       @containers =Hash.new(cont_resp.body)
       puts @containers.class
+        p @containers
     puts "**"*40
     render "dashboard"
   end
