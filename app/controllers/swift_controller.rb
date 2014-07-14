@@ -48,7 +48,7 @@ class SwiftController < ApplicationController
   
   def create_container
     puts "************************************ Creating Container *************"
-    c_name = params.permit(:container_name).require!
+    c_name = params.permit(:container_name)
     p c_name
     @cont_url = SWIFT_URL+"/#{c_name}"
     puts "############" + @cont_url
