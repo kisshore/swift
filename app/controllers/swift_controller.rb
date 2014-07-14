@@ -11,7 +11,7 @@ class SwiftController < ApplicationController
        })
     
     puts @auth_resp
-    puts @auth_token = auth_resp["access"]["token"]["id"]
+    puts @auth_token = @auth_resp["access"]["token"]["id"]
     if (Authentications.create(:user => "test", :token => @auth_token))
        flash[:id_notice]= "New authentication token has benn generated.!"
     else
