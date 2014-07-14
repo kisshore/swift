@@ -31,7 +31,10 @@ class SwiftController < ApplicationController
     puts cont_resp.class
     puts cont_resp.headers
     puts cont_resp.body
-      @cont_array = Array.new
+      
+      
+      @cont_json = JSON.parse(cont_resp.body)
+      p @cont_json
       @containers =Hash.new
       cont_resp.each_line do |x|
         p "Linessss............"
