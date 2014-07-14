@@ -33,7 +33,7 @@ class SwiftController < ApplicationController
     puts cont_resp.body
       @cont_array = Array.new
       @containers =Hash.new
-      cont_resp.body.each_line do |x|
+      cont_resp.each_line do |x|
         p "Linessss............"
         @cont_array.push(Hash.new(x))
       end
