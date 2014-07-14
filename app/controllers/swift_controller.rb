@@ -35,16 +35,13 @@ class SwiftController < ApplicationController
       
       @cont_json = JSON.parse(cont_resp.body)
       p @cont_json
-      @containers =Hash.new
-      cont_resp.each_line do |x|
-        p "Linessss............"
-        @cont_array.push(Hash.new(x))
-      end
-      
-      p @cont_array
-      puts @containers.class
-        p @containers
-    puts "**"*40
+      p @cont_json.class
+        @cont_json.each do |x|
+          p x
+        end
+          
+     
+      puts "**"*40
     render "dashboard"
   end
   
