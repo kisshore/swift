@@ -4,13 +4,13 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
    root 'welcome#index'
-  get "/upload" => "welcome#upload"
+  get "/dashboard" => "swift#list_containers"
   
-  post "/upload" => "welcome#upload_swift"
+  post "/upload" => "swift#create_container"
   
-  post "/create_container" => "welcome#create_container"
+  post "/create_container" => "swift#create_container"
   
-  get "/create_token" => "welcome#create_test_token"
+  get "/create_token" => "swift#generate_token"
   
   get "/tester" => "welcome#tester"
   

@@ -118,7 +118,7 @@ class WelcomeController < ApplicationController
   
   def tester
      puts "**"*40 + "TESTING HTTPARTY!"
-    puts "****************** Generating Authenication token... ************"   
+   puts "****************** Generating Authenication token... ************"   
     auth_resp = HTTParty.post("http://192.168.5.75:5000/v2.0/tokens",
       {
         :headers => {'Content-Type' => "application/json", "Accept" => "application/json"},
