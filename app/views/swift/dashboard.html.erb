@@ -21,8 +21,8 @@
 
 <div class="row">
   <div class="col-md-6 ">
-<% if @containers[:count].to_i>0 %>
-  <%(0...@containers[:count].to_i).each do |x|%>
+<% if @containers.count.to_i>0 %>
+  <%(0...@containers.count.to_i).each do |x|%>
 
    <div class="panel panel-success">
         <div class="panel-heading">

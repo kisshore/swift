@@ -28,6 +28,7 @@ class SwiftController < ApplicationController
     @auth_token = Authentications.last.token
     cont_resp = HTTParty.get(SWIFT_URL, { :headers => {'X-Auth-Token' => @auth_token} })   
     puts cont_resp
+    puts cont_resp.class
     @containers =cont_resp
     puts "**"*40
     render "dashboard"
