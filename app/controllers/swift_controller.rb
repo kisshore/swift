@@ -32,7 +32,7 @@ class SwiftController < ApplicationController
     puts cont_resp.headers
     puts cont_resp.body
       
-      @containers =Array.new(cont_resp.body)
+      @containers =Hash.new(cont_resp.body)
       puts @containers.class
     puts "**"*40
     render "dashboard"
