@@ -31,8 +31,9 @@ class SwiftController < ApplicationController
     puts cont_resp.class
     puts cont_resp.headers
     puts cont_resp.body
-      
+      @cont_Array = Array.new(cont_resp.body)
       @containers =Hash.new(cont_resp.body)
+      p @cont_array
       puts @containers.class
         p @containers
     puts "**"*40
