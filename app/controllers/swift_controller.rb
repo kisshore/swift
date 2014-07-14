@@ -26,7 +26,7 @@ class SwiftController < ApplicationController
   def list_containers
     puts "************************************ Listing Containers *************"
     @auth_token = Authentications.last.token
-    cont_resp = HTTParty.get(SWIFT_URL, { :headers => {'X-Auth-Token' => @auth_token} })   
+    cont_resp = HTTParty.get(SWIFT_URL+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
     puts cont_resp
     puts cont_resp.class
     puts cont_resp.headers
