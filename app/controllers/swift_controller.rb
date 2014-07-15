@@ -92,10 +92,10 @@ class SwiftController < ApplicationController
     p @obj_file
     p @obj_file.original_filename
     
-    @obj_url = SWIFT_URL+@obj_file.original_filename
+    @obj_url = SWIFT_URL+"/"+@obj_file.original_filename
     p @obj_url
     #obj_resp = HTTParty.put(@obj_url, {:headers => {'X-Auth-Token' => @auth_token}})  
-    obj_resp = %x(curl –X PUT -i  -H "X-Auth-Token: #{@auth_token}" -T #{obj_file.tempfile} #{@obj_url})
+    obj_resp = %x(curl –X PUT -i  -H "X-Auth-Token: #{@auth_token}" -T #{@obj_file.tempfile} #{@obj_url})
     redirect_to :back
   end
   
