@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140712123934) do
+ActiveRecord::Schema.define(version: 20140715110121) do
 
   create_table "authentications", force: true do |t|
     t.string   "user"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 20140712123934) do
 
   create_table "docs", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "drums", force: true do |t|
+    t.string   "obj"
+    t.string   "obj_uid"
+    t.string   "obj_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

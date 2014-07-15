@@ -30,6 +30,7 @@
         </div>  
         <div class="panel-body">
           Panel content
+          <a href="#create_obj_modal" data-toggle="modal" data-target="#myModal">upload object</a>
         </div><!--Pannel body-->
     </div><!--Pannel-->
   
@@ -58,12 +59,53 @@
                       <button type="submit" class="btn btn-primary">create</button>
                 </div>
     </fieldset>
-          
           <%end%>
           
          
         </div><!--Pannel body-->
     </div><!--Pannel-->
   </div>
+  
+  
+
+
+ 
 </div><!---ROW END-->
 <%end%><!---UNLESS END--->
+
+
+<!--OBJECT MODAL STARTS HERE!--->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <%= form_tag ("/create_object"), :class => "form-horizontal", multipart: true do%>
+           <fieldset >
+            <legend>Create a Object<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></legend>
+            <div class="form-group">
+                    <label for="name" class="col-lg-2 control-label">Name:</label>
+                    <div class="col-lg-10">
+                      <%= text_field_tag "Object_name",nil,class: "form-control",placeholder: "Object Name" %>
+                    
+                    </div>
+                   
+             </div>
+             <div class="form-group">
+             <label for="name" class="col-lg-2 control-label">File :</label>
+                <div class="col-lg-10">
+                         <%= file_field_tag "file" %>
+                    </div>
+               </div>
+             <div class="col-lg-10 col-lg-offset-2">
+                      <button type="submit" class="btn btn-success btn-sm">create</button>
+                 <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                </div>
+    </fieldset>
+          <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--END OF OBJECT MODAL END HERE!--->

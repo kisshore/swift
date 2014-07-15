@@ -16,8 +16,9 @@ gem 'coffee-rails', '~> 4.0.0'
 #JSON gem for processing the tokens etc.
 gem 'json', '~> 1.8.1'
 gem 'net-ping'
-
+gem 'dragonfly'
 gem 'httparty'
+gem 'httmultiparty'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks

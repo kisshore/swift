@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  obj: MyString
+  obj_uid: MyString
+  obj_name: MyString
+
+two:
+  obj: MyString
+  obj_uid: MyString
+  obj_name: MyString

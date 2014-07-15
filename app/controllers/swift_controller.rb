@@ -1,8 +1,14 @@
 class SwiftController < ApplicationController
+  require 'httmultiparty'
+  require "json"
+  require 'net/ping'
+
+  
   KEYSTONE_URL = "http://192.168.5.75:5000/v2.0/tokens"
   SWIFT_URL = "http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7"
   
   def generate_token
+    begin
     puts "****************** Generating Authenication token... ************"   
     @auth_resp = HTTParty.post(KEYSTONE_URL,
       {
@@ -18,13 +24,17 @@ class SwiftController < ApplicationController
       flash[:id_notice]= "Unable to create authentication token.. Please check the log.!"
     end
     puts "**"*40
+    rescue
+      puts "Saved!"
+    ensure
     list_containers
-   
+    end
   end
   
   
   def list_containers
     puts "************************************ Listing Containers *************"
+    begin
     @auth_token = Authentications.last.token
     cont_resp = HTTParty.get(SWIFT_URL+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
     puts cont_resp
@@ -33,17 +43,18 @@ class SwiftController < ApplicationController
     puts cont_resp.body
       
       
-      @cont_json = JSON.parse(cont_resp.body)
+    # @cont_json = JSON.parse(cont_resp.body)
       p @cont_json
-      p @cont_json.class
-        @cont_json.each do |x|
-          p x
-        end
           
-        @containers = JSON.parse(cont_resp.body)
+       @containers = JSON.parse(cont_resp.body)
+      rescue
+        #@containers = [{"name"=> "conatiner1","count"=> 23, "size" =>10},{"name"=> "conatiner2","count"=> 23, "size" =>10},{"name"=> "conatiner3","count"=> 23, "size" =>10},{"name"=> "conatiner4","count"=> 23, "size" =>10}]
+      @containers = JSON.parse(cont_resp.body)
      
       puts "**"*40
+    ensure
     render "dashboard"
+      end
   end
   
   def create_container
@@ -62,7 +73,9 @@ class SwiftController < ApplicationController
   
   def delete_container
     puts "************************************ Creating Container *************"
-    c_name = 
+     c_name = params.permit(:container_name)
+    p c_name = c_name["container_name"]
+    
     @auth_token = Authentications.last.token
     @cont_url = SWIFT_URL+"/#{c_name}"
     cont_resp = HTTParty.delete(@cont_url, {:headers => {'X-Auth-Token' => @auth_token}})  
@@ -70,6 +83,20 @@ class SwiftController < ApplicationController
   end
   
   def create_object
+    puts params
+    #curl –X PUT -i  -H "X-Auth-Token: $auth_token" -T JingleRocky.jpg $swift_url/container/obj
+    
+    @auth_token = Authentications.last.token
+    
+    @obj_file = params.require(:file)
+    p @obj_file
+    p @obj_file.original_filename
+    
+    @obj_url = SWIFT_URL+@obj_file.original_filename
+    p @obj_url
+    #obj_resp = HTTParty.put(@obj_url, {:headers => {'X-Auth-Token' => @auth_token}})  
+    obj_resp = %x(curl –X PUT -i  -H "X-Auth-Token: #{@auth_token}" -T #{obj_file.tempfile} #{@obj_url})
+    redirect_to :back
   end
   
   def list_objects

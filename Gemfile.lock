@@ -36,9 +36,16 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.1)
+    dragonfly (1.0.5)
+      multi_json (~> 1.0)
+      rack
     erubis (2.7.0)
     execjs (2.2.1)
     hike (1.2.3)
+    httmultiparty (0.3.15)
+      httparty (>= 0.7.3)
+      mimemagic
+      multipart-post
     httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -54,9 +61,11 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
+    mimemagic (0.2.1)
     minitest (5.4.0)
     multi_json (1.10.1)
     multi_xml (0.5.5)
+    multipart-post (2.0.0)
     net-ping (1.7.4)
     polyglot (0.3.5)
     rack (1.5.2)
@@ -117,6 +126,8 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  dragonfly
+  httmultiparty
   httparty
   jbuilder (~> 2.0)
   jquery-rails

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   
   post "/create_container" => "swift#create_container"
   
+  post "/create_object" => "swift#create_object"
+  
   get "/create_token" => "swift#generate_token"
   
   get "/tester" => "welcome#tester"
