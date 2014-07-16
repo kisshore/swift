@@ -100,9 +100,24 @@ class SwiftController < ApplicationController
   end
   
   def list_objects
+    @auth_token = Authentications.last.token
+     cont_resp = HTTParty.get(SWIFT_URL+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
+    @containers = JSON.parse(cont_resp.body)
+    @containers.each do |x|
+      @ob_url = SWIFT_URL+"/"+x["name"]
+      
+      obj_resp =  HTTParty.get(@ob_url+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
+      
+      p obj_resp
+      p JSON.parse(obj_resp)
+      
+    end
+    redirect_to :back
   end
   
   def delete_object
+    
+      
   end
   
   
