@@ -109,7 +109,7 @@ class SwiftController < ApplicationController
       obj_resp =  HTTParty.get(@ob_url+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
       
       p obj_resp
-      p JSON.parse(obj_resp)
+      p JSON.parse(obj_resp.body)
       
     end
     redirect_to :back
