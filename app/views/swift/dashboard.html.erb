@@ -30,7 +30,7 @@
         </div>  
         <div class="panel-body">
           Panel content
-          <a href="#create_obj_modal" data-toggle="modal" data-target="#myModal">upload object</a>
+          <a href="#create_obj_modal" data-toggle="modal" data-target="#myModal" class="create_obj" data-container=<%=x['name']%>>upload object</a>
         </div><!--Pannel body-->
     </div><!--Pannel-->
   
@@ -87,10 +87,20 @@
                     <label for="name" class="col-lg-2 control-label">Name:</label>
                     <div class="col-lg-10">
                       <%= text_field_tag "Object_name",nil,class: "form-control",placeholder: "Object Name" %>
-                    
                     </div>
-                   
              </div>
+             <div class="form-group">
+                    <label for="name" class="col-lg-2 control-label">Meta :</label>
+                    <div class="col-lg-5">
+                      <%= text_field_tag "meta[name_0]",nil,class: "form-control",placeholder: "Meta Name" %>
+                    </div>
+                   <div class="col-lg-5">
+                     <%= text_field_tag "meta[value_0]",nil,class: "form-control",placeholder: "Meta value" %>
+                    </div>
+             </div>
+               <div id="add_obj_meta">
+               </div>
+             
              <div class="form-group">
              <label for="name" class="col-lg-2 control-label">File :</label>
                 <div class="col-lg-10">
@@ -100,6 +110,7 @@
              <div class="col-lg-10 col-lg-offset-2">
                       <button type="submit" class="btn btn-success btn-sm">create</button>
                  <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-primary btn-sm" id="add_obj_meta_btn" >Add Meta data</button>
                 </div>
     </fieldset>
           <%end%>

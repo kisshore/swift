@@ -15,7 +15,6 @@ class SwiftController < ApplicationController
         :headers => {'Content-Type' => "application/json", "Accept" => "application/json"},
         :body => {"auth" =>{"passwordCredentials" =>{"username" => "swift","password" =>"root"},"tenantName" =>"service" }}.to_json
        })
-    
     puts @auth_resp
     puts @auth_token = @auth_resp["access"]["token"]["id"]
     if (Authentications.create(:user => "test", :token => @auth_token))
@@ -36,19 +35,16 @@ class SwiftController < ApplicationController
     puts "************************************ Listing Containers *************"
     begin
     @auth_token = Authentications.last.token
-    cont_resp = HTTParty.get(SWIFT_URL+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
+     cont_resp = HTTParty.get(SWIFT_URL+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
     puts cont_resp
     puts cont_resp.class
     puts cont_resp.headers
     puts cont_resp.body
       
-      
-    # @cont_json = JSON.parse(cont_resp.body)
-      p @cont_json
-          
+     p @cont_json
        @containers = JSON.parse(cont_resp.body)
       rescue
-        #@containers = [{"name"=> "conatiner1","count"=> 23, "size" =>10},{"name"=> "conatiner2","count"=> 23, "size" =>10},{"name"=> "conatiner3","count"=> 23, "size" =>10},{"name"=> "conatiner4","count"=> 23, "size" =>10}]
+       # @containers = [{"name"=> "conatiner1","count"=> 23, "size" =>10},{"name"=> "conatiner2","count"=> 23, "size" =>10},{"name"=> "conatiner3","count"=> 23, "size" =>10},{"name"=> "conatiner4","count"=> 23, "size" =>10}]
       @containers = JSON.parse(cont_resp.body)
      
       puts "**"*40
@@ -85,17 +81,21 @@ class SwiftController < ApplicationController
   def create_object
     puts params
     #curl –X PUT -i  -H "X-Auth-Token: $auth_token" -T JingleRocky.jpg $swift_url/container/obj
-    
+    @cont_name = params.require(:container_name)
     @auth_token = Authentications.last.token
-    
+    @obj_meta = params.require(:meta)
+    puts @obj_meta
     @obj_file = params.require(:file)
     p @obj_file
     p @obj_file.original_filename
-    
-    @obj_url = SWIFT_URL+"/"+@obj_file.original_filename
+    p "%%"*10
+    p @obj_file.path
+    @obj_url = SWIFT_URL+"/"+@cont_name+"/"+@obj_file.original_filename
     p @obj_url
+    
     #obj_resp = HTTParty.put(@obj_url, {:headers => {'X-Auth-Token' => @auth_token}})  
-    obj_resp = %x(curl –X PUT -i  -H "X-Auth-Token: #{@auth_token}" -T #{@obj_file.tempfile} #{@obj_url})
+    obj_resp = %x(curl –X PUT -i  -H "X-Auth-Token: #{@auth_token}" -T #{@obj_file.path} #{@obj_url})
+    
     redirect_to :back
   end
   
