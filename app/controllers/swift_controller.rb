@@ -93,12 +93,12 @@ class SwiftController < ApplicationController
     @cont_name = params.require(:container_name)
     container = service.directories.get "kishore"
       @obj_file = params.require(:drum).permit(:obj)
-    p @obj_file
-    
-    f = container.files.create :key => "teste.mp3", :body=>@obj_file
-    p f.save
+    p f=  @obj_file["obj"]
     p f
-     redirect_to :back
+    
+    h = container.files.create :key => "teste.mp3", :body=>f
+    p h 
+    redirect_to :back
   end
     
    
