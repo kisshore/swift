@@ -91,9 +91,9 @@ class SwiftController < ApplicationController
 })
     p service 
     @cont_name = params.require(:container_name)
-    container = service.directories.get @cont_name
+    container = service.directories.get "kishore"
       @obj_file = params.require(:drum).permit(:obj)
-    @obj_file = File.open(@obj_file)
+    p @obj_file
     
     f = container.files.create :key => "teste.mp3", :body=>@obj_file
     p f.save
