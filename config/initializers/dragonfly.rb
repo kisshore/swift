@@ -1,4 +1,5 @@
 require 'dragonfly'
+SWIFT_URL = "http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7"
 
 # Configure
 Dragonfly.app.configure do
@@ -8,6 +9,11 @@ Dragonfly.app.configure do
   secret "884763816fedd2ac5a2c318b87514b40fcb1c3547e6c759d01c1a2e1420ac76d"
 
   url_format "/media/:job/:name"
+  
+  #custom trails
+
+  
+  
 
   datastore :file,
     root_path: Rails.root.join('public/system/dragonfly', Rails.env),

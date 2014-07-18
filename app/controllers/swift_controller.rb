@@ -2,7 +2,7 @@ class SwiftController < ApplicationController
   require 'httmultiparty'
   require "json"
   require 'net/ping'
-
+  include HTTMultiParty
   
   KEYSTONE_URL = "http://192.168.5.75:5000/v2.0/tokens"
   SWIFT_URL = "http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7"
@@ -35,17 +35,17 @@ class SwiftController < ApplicationController
     puts "************************************ Listing Containers *************"
     begin
     @auth_token = Authentications.last.token
-     cont_resp = HTTParty.get(SWIFT_URL+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
+     #cont_resp = HTTParty.get(SWIFT_URL+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
     puts cont_resp
     puts cont_resp.class
     puts cont_resp.headers
     puts cont_resp.body
       
      p @cont_json
-       @containers = JSON.parse(cont_resp.body)
+       #@containers = JSON.parse(cont_resp.body)
       rescue
-       # @containers = [{"name"=> "conatiner1","count"=> 23, "size" =>10},{"name"=> "conatiner2","count"=> 23, "size" =>10},{"name"=> "conatiner3","count"=> 23, "size" =>10},{"name"=> "conatiner4","count"=> 23, "size" =>10}]
-      @containers = JSON.parse(cont_resp.body)
+        @containers = [{"name"=> "conatiner1","count"=> 23, "size" =>10},{"name"=> "conatiner2","count"=> 23, "size" =>10},{"name"=> "conatiner3","count"=> 23, "size" =>10},{"name"=> "conatiner4","count"=> 23, "size" =>10}]
+      #@containers = JSON.parse(cont_resp.body)
      
       puts "**"*40
     ensure
@@ -85,19 +85,45 @@ class SwiftController < ApplicationController
     @auth_token = Authentications.last.token
     @obj_meta = params.require(:meta)
     puts @obj_meta
-    @obj_file = params.require(:file)
+    @obj_file = params.require(:drum).permit(:obj)
+    @obj_file = @obj_file["obj"]
+    response = self.post(SWIFT_URL+"/"+@cont_name+"/"+@obj_file.original_filename, :query => {
+  :foo      => 'bar',
+  :somefile => File.new('README.md')
+})  
     p @obj_file
-    p @obj_file.original_filename
+    p @obj_file.url
     p "%%"*10
     p @obj_file.path
     @obj_url = SWIFT_URL+"/"+@cont_name+"/"+@obj_file.original_filename
     p @obj_url
+   
+  
+  service = Fog::Storage.new({
+  :provider            => 'OpenStack',   # OpenStack Fog provider
+  :openstack_username  => "swift",      # Your OpenStack Username
+  :openstack_api_key   => "root",      # Your OpenStack Password
+  :openstack_auth_url  => KEYSTONE_URL,
+    :openstack_tenant => "service"
+})
+    
+    p service
+    p service.directories
+    #container = service.directories.get "kishore"
+    #f = container.files.create :key => "README.md", :body => File.open "README.md"
+    
+    
     
     #obj_resp = HTTParty.put(@obj_url, {:headers => {'X-Auth-Token' => @auth_token}})  
+   
+    
+    
     obj_resp = %x(curl –X PUT -i  -H "X-Auth-Token: #{@auth_token}" -T #{@obj_file.path} #{@obj_url})
     
     redirect_to :back
   end
+    
+   
   
   def list_objects
     @auth_token = Authentications.last.token
