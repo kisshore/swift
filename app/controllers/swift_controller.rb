@@ -19,11 +19,13 @@ class SwiftController < ApplicationController
   
   
   def list_containers  
+    p @@service
     @containers = Array.new
     @objects = Array.new
+    
     @@service.directories.each do |container|
       @containers.push(container)
-      @objects.push(container.files)
+     # @objects.push(container.files)
     end
     
     
