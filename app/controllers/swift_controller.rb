@@ -2,67 +2,44 @@ class SwiftController < ApplicationController
   require 'httmultiparty'
   require "json"
   require 'net/ping'
-  include HTTMultiParty
+  require 'fog'
+  
   
   KEYSTONE_URL = "http://192.168.5.75:5000/v2.0/tokens"
   SWIFT_URL = "http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7"
   
   def generate_token
-    begin
-    puts "****************** Generating Authenication token... ************"   
-    @auth_resp = HTTParty.post(KEYSTONE_URL,
-      {
-        :headers => {'Content-Type' => "application/json", "Accept" => "application/json"},
-        :body => {"auth" =>{"passwordCredentials" =>{"username" => "swift","password" =>"root"},"tenantName" =>"service" }}.to_json
-       })
-    puts @auth_resp
-    puts @auth_token = @auth_resp["access"]["token"]["id"]
-    if (Authentications.create(:user => "test", :token => @auth_token))
-       flash[:id_notice]= "New authentication token has benn generated.!"
-    else
-      flash[:id_notice]= "Unable to create authentication token.. Please check the log.!"
-    end
-    puts "**"*40
-    rescue
-      puts "Saved!"
-    ensure
+  @@service = Fog::Storage.new({:provider => 'OpenStack',:openstack_username => "swift", :openstack_api_key => "root",:openstack_auth_url  => "http://192.168.5.75:5000/v2.0/tokens", :openstack_tenant => "service" })
+    
+    @auth_token= @@service.instance_values["auth_token"]
+    
     list_containers
-    end
+    
   end
   
   
-  def list_containers
-    puts "************************************ Listing Containers *************"
-    begin
-    @auth_token = Authentications.last.token
-     #cont_resp = HTTParty.get(SWIFT_URL+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
-    puts cont_resp
-    puts cont_resp.class
-    puts cont_resp.headers
-    puts cont_resp.body
-      
-     p @cont_json
-       #@containers = JSON.parse(cont_resp.body)
-      rescue
-        @containers = [{"name"=> "conatiner1","count"=> 23, "size" =>10},{"name"=> "conatiner2","count"=> 23, "size" =>10},{"name"=> "conatiner3","count"=> 23, "size" =>10},{"name"=> "conatiner4","count"=> 23, "size" =>10}]
-      #@containers = JSON.parse(cont_resp.body)
-     
-      puts "**"*40
-    ensure
+  def list_containers  
+    @containers = Array.new
+    @objects = Array.new
+    @@service.directories.each do |container|
+      @containers.push(container)
+      @objects.push(container.files)
+    end
+    
+    
+    p @containers
+    p @objects
+    
+    
     render "dashboard"
-      end
   end
   
   def create_container
     puts "************************************ Creating Container *************"
     c_name = params.permit(:container_name)
     p c_name = c_name["container_name"]
-    @cont_url = SWIFT_URL+"/#{c_name}"
-    puts "############" + @cont_url
-    @auth_token = Authentications.last.token
-    cont_resp = HTTParty.put(@cont_url, {:headers => {'X-Auth-Token' => @auth_token}})  
-    puts cont_resp
-    puts "**"*50
+    p @@service
+    @@service.directories.create :key => c_name
     list_containers
   
   end
@@ -71,27 +48,17 @@ class SwiftController < ApplicationController
     puts "************************************ Creating Container *************"
      c_name = params.permit(:container_name)
     p c_name = c_name["container_name"]
-    
-    @auth_token = Authentications.last.token
-    @cont_url = SWIFT_URL+"/#{c_name}"
-    cont_resp = HTTParty.delete(@cont_url, {:headers => {'X-Auth-Token' => @auth_token}})  
+    cont = @@service.directories.get c_name
     list_containers
   end
   
   def create_object
     puts params
-    #curl –X PUT -i  -H "X-Auth-Token: $auth_token" -T JingleRocky.jpg $swift_url/container/obj
-  
-  service = Fog::Storage.new({
-  :provider            => 'OpenStack',   # OpenStack Fog provider
-  :openstack_username  => "swift",      # Your OpenStack Username
-  :openstack_api_key   => "root",      # Your OpenStack Password
-  :openstack_auth_url  => KEYSTONE_URL,
-    :openstack_tenant => "service"
-})
-    p service 
+   
+    p @@service
+    
     @cont_name = params.require(:container_name)
-    container = service.directories.get "kishore"
+    container = service.directories.get @cont_name
       @obj_file = params.require(:drum).permit(:obj)
     p f=  @obj_file["obj"]
     p f
@@ -104,18 +71,6 @@ class SwiftController < ApplicationController
    
   
   def list_objects
-    @auth_token = Authentications.last.token
-     cont_resp = HTTParty.get(SWIFT_URL+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
-    @containers = JSON.parse(cont_resp.body)
-    @containers.each do |x|
-      @ob_url = SWIFT_URL+"/"+x["name"]
-      
-      obj_resp =  HTTParty.get(@ob_url+"?format=json", { :headers => {'X-Auth-Token' => @auth_token} })   
-      
-      p obj_resp
-      p JSON.parse(obj_resp.body)
-      
-    end
     redirect_to :back
   end
   
