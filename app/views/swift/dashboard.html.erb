@@ -17,7 +17,7 @@
 <br/><br/>
 
 <%= @containers%>
-<% unless @containers.nil?%>
+<% if @containers.count >0 %>
 
 <div class="row">
   <div class="col-md-6 ">
@@ -26,11 +26,11 @@
 
    <div class="panel panel-success">
         <div class="panel-heading">
-          <h3 class="panel-title"><%=x["name"]%></h3>
+          <h3 class="panel-title"><%=x%></h3>
         </div>  
         <div class="panel-body">
-          Panel content
-          <a href="#create_obj_modal" data-toggle="modal" data-target="#myModal" class="create_obj" data-container=<%=x['name']%>>upload object</a>
+            
+          <a href="#create_obj_modal" data-toggle="modal" data-target="#myModal" class="create_obj" data-container=<%=x%>>upload object</a>
         </div><!--Pannel body-->
     </div><!--Pannel-->
   
@@ -55,7 +55,6 @@
                     </div>
              </div>
              <div class="col-lg-10 col-lg-offset-2">
-                      
                       <button type="submit" class="btn btn-primary">create</button>
                 </div>
     </fieldset>

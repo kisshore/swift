@@ -21,11 +21,11 @@ class SwiftController < ApplicationController
   def list_containers  
     p @@service
     @containers = Array.new
-    @objects = Array.new
+    @objects = Hash.new
     
     @@service.directories.each do |container|
-      @containers.push(container)
-     # @objects.push(container.files)
+      @containers.push(container.key)
+      @objects[container.key] = container.files
     end
     
     
