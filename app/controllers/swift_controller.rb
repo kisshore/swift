@@ -30,8 +30,10 @@ class SwiftController < ApplicationController
     
     
     p @containers
-    p @objects
-    
+  p "1"
+    p "2"
+    #p @objects
+    p "3"
     
     render "dashboard"
   end
