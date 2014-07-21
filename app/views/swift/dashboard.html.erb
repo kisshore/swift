@@ -29,7 +29,12 @@
           <h3 class="panel-title"><%=x%></h3>
         </div>  
         <div class="panel-body">
-            
+          <% @objects[x].each do |obj|%>
+          <a href><%= obj.key%></a>
+          <br>
+          <%end%>
+          
+          
           <a href="#create_obj_modal" data-toggle="modal" data-target="#myModal" class="create_obj" data-container=<%=x%>>upload object</a>
         </div><!--Pannel body-->
     </div><!--Pannel-->

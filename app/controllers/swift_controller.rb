@@ -25,15 +25,16 @@ class SwiftController < ApplicationController
     
     @@service.directories.each do |container|
       @containers.push(container.key)
-      #@objects[container.key] = container.files
     end
     
     
     p @containers
-  p "1"
-    p "2"
-    #p @objects
-    p "3"
+    
+    @containers.each do |c|
+      cont = @@service.directories.get c
+      @objects[c] = cont.files
+    end
+    
     
     render "dashboard"
   end
@@ -67,7 +68,8 @@ class SwiftController < ApplicationController
     p f=  @obj_file["obj"]
     p f
     
-    h = container.files.create :key => "teste.mp3", :body=>f
+    
+    h = container.files.create :key => f.original_filename, :body=>f
     p h 
     redirect_to :back
   end
