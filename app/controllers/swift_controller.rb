@@ -25,7 +25,7 @@ class SwiftController < ApplicationController
     
     @@service.directories.each do |container|
       @containers.push(container.key)
-      @objects[container.key] = container.files
+      #@objects[container.key] = container.files
     end
     
     
