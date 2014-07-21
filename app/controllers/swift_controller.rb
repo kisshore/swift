@@ -62,7 +62,7 @@ class SwiftController < ApplicationController
     p @@service
     
     @cont_name = params.require(:container_name)
-    container = service.directories.get @cont_name
+    container = @@service.directories.get @cont_name
       @obj_file = params.require(:drum).permit(:obj)
     p f=  @obj_file["obj"]
     p f
