@@ -82,7 +82,7 @@ class SwiftController < ApplicationController
     p dir
     s_file = dir.files.first
     p s_file
-    send_file s_file.key
+    send_file SWIFT_URL+"NaAg"+s_file.key
     p "This is what i know..!"
     
     redirect_to :back
