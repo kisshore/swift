@@ -77,6 +77,14 @@ class SwiftController < ApplicationController
    
   
   def list_objects
+    p "downloading files.."
+    dir= @@service.directories.get("NaAg")
+    p dir
+    s_file = dir.files.first
+    p s_file
+    send_file s_file
+    p "This is what i know..!"
+    
     redirect_to :back
   end
   
