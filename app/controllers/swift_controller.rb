@@ -130,6 +130,20 @@ class SwiftController < ApplicationController
     #redirect_to :back
   end
   
+  def list_objects4
+    p "downloading files.."
+    dir= @@service.directories.get("NaAg")
+    p dir
+    s_file = dir.files.first
+    p s_file
+    send_data s_file , :filename => s_file.key, :type => s_file.content_type
+    
+    
+    p "This is what i know..!"
+    
+    #redirect_to :back
+  end
+  
   def delete_object
     
       
