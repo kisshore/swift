@@ -82,6 +82,12 @@ class SwiftController < ApplicationController
     container =  params.require(:container)
     object = params.require(:object)
     object = object+params.require(:format)
+    p container
+    p object
+    dir = @@service.directories.get container
+    obj = dir.files.get(object)
+    p dir
+    p obj
     send_data @@service.get_object(container,object)
    # redirect_to :root
 
