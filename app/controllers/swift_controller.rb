@@ -98,7 +98,7 @@ class SwiftController < ApplicationController
       puts foo
       puts File
     
-    send_file foo.path
+      send_data foo
     
     
     p "This is what i know..!"
