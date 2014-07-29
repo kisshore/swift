@@ -19,6 +19,7 @@ class SwiftController < ApplicationController
   
   
   def list_containers  
+    
     p @@service
     @containers = Array.new
     @objects = Hash.new
@@ -82,7 +83,8 @@ class SwiftController < ApplicationController
     p dir
     s_file = dir.files.first
     p s_file
-    send_file SWIFT_URL+"/NaAg/"+s_file.key
+  #  send_file SWIFT_URL+"/NaAg/"+s_file.key
+    send_file s_file, :filename => "kishore.mp3"
     p "This is what i know..!"
     
     redirect_to :back

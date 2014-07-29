@@ -141,15 +141,19 @@ class WelcomeController < ApplicationController
      puts "**"*40
     
     
-    
-    
-    
-    
-    
-    
-    
-    
     redirect_to :root
+    
+  end
+  
+  def tester2
+    f = open("http://www.rrootshell.com/images/logo.png")
+    send_file f, :filename => "rslogo.png"
+    
+    #Rails.root.join('ak.txt')
+   # p request
+    p response
+    
+   # redirect_to :root
     
   end
   

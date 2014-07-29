@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   
   get "/create_token" => "swift#generate_token"
   
-  get "/tester" => "welcome#tester"
+  get "/tester" => "welcome#tester2"
   
   get "/list_objects" => "swift#list_objects"
   
