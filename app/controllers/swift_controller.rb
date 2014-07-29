@@ -92,6 +92,12 @@ class SwiftController < ApplicationController
         end  
         end
     
+    
+    p "**"*50
+    p foo.class
+      puts foo
+      puts File
+    
     send_file foo.path
     
     
