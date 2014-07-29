@@ -83,22 +83,46 @@ class SwiftController < ApplicationController
     p dir
     s_file = dir.files.first
     p s_file
-  #  send_file SWIFT_URL+"/NaAg/"+s_file.key
-    #send_file s_file, :filename => "kishore.mp3"
-     
     foo= File.open('kishore.mp3', 'w') do | f |
         dir.files.first do | data, remaining, content_length |
         f.syswrite data
         end  
         end
-    
-    
-    p "**"*50
-    p foo.class
-      puts foo
-      puts File
-    
       send_data foo , :filename => "trigger.mp3"
+    
+    
+    p "This is what i know..!"
+    
+    #redirect_to :back
+  end
+  
+  def list_objects2
+    p "downloading files.."
+    dir= @@service.directories.get("NaAg")
+    p dir
+    s_file = dir.files.first
+    p s_file
+    foo= s_file.save
+      send_data foo , :filename => "trigger.mp3"
+    
+    
+    p "This is what i know..!"
+    
+    #redirect_to :back
+  end
+  
+  def list_objects3
+    p "downloading files.."
+    dir= @@service.directories.get("NaAg")
+    p dir
+    s_file = dir.files.first
+    p s_file
+    foo= File.open('kishore.mp3', 'w') do | f |
+        dir.files.first do | data, remaining, content_length |
+        f.syswrite data
+        end  
+        end
+    send_data s_file , :filename => "trigger.mp3"
     
     
     p "This is what i know..!"

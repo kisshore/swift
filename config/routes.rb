@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get "/tester" => "welcome#tester2"
   
   get "/list_objects" => "swift#list_objects"
+  get "/list_objects2" => "swift#list_objects2"
+  get "/list_objects3" => "swift#list_objects3"
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
