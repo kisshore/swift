@@ -88,7 +88,7 @@ class SwiftController < ApplicationController
         f.syswrite data
         end  
         end
-      send_data foo , :filename => "trigger.mp3"
+    send_data foo.body , :filename => "trigger.mp3"
     
     
     p "This is what i know..!"
@@ -97,26 +97,7 @@ class SwiftController < ApplicationController
   end
   
   def list_objects2
-    p "downloading files.."
-    dir= @@service.directories.get("NaAg")
-    p dir
-    s_file = dir.files.first
-    p s_file
-    foo= s_file.save
-      #send_data foo , :filename => "trigger.mp3"
-  
-    foo= File.open('kishore.mp3', 'w') do | f |
-        dir.files.first do | data, remaining, content_length |
-        f.syswrite data
-        end  
-        end
-    render :text =>  proc  {|response,output|
-      output.write s_file
-      }
-    
-    p "This is what i know..!"
-    
-    #redirect_to :back
+
   end
   
   def list_objects3
