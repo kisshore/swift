@@ -30,7 +30,7 @@
         </div>  
         <div class="panel-body">
           <% @objects[x].each do |obj|%>
-          <a href><%= obj.key%></a>
+          <a href="/list_objects/#{x.key}/#{obj.key%}" download><%= obj.key%></a>
           <br>
           <%end%>
           
