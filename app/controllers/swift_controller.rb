@@ -88,7 +88,7 @@ class SwiftController < ApplicationController
         f.syswrite data
         end  
         end
-    send_data foo.body , :filename => "trigger.mp3"
+    send_data s_file.body , :filename => "trigger.mp3"
     
     
     p "This is what i know..!"
