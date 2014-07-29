@@ -103,8 +103,16 @@ class SwiftController < ApplicationController
     s_file = dir.files.first
     p s_file
     foo= s_file.save
-      send_data foo , :filename => "trigger.mp3"
-    
+      #send_data foo , :filename => "trigger.mp3"
+  
+    foo= File.open('kishore.mp3', 'w') do | f |
+        dir.files.first do | data, remaining, content_length |
+        f.syswrite data
+        end  
+        end
+    render :text =>  proc  {|response,output|
+      output.write s_file
+      }
     
     p "This is what i know..!"
     
@@ -136,7 +144,7 @@ class SwiftController < ApplicationController
     p dir
     s_file = dir.files.first
     p s_file
-    send_data s_file , :filename => s_file.key, :type => s_file.content_type
+    send_file s_file , :filename => s_file.key, :type => s_file.content_type
     
     
     p "This is what i know..!"
