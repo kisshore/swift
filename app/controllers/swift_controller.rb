@@ -84,7 +84,9 @@ class SwiftController < ApplicationController
     s_file = dir.files.first
     p s_file
   #  send_file SWIFT_URL+"/NaAg/"+s_file.key
-    send_file s_file, :filename => "kishore.mp3"
+    #send_file s_file, :filename => "kishore.mp3"
+     send_file File.open('kishore.mp3', 'w'){ | f | dir.files.first{ do | data, remaining, content_length | f.syswrite data}}.path
+   
     p "This is what i know..!"
     
     redirect_to :back
