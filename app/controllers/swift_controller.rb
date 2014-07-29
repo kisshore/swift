@@ -81,7 +81,7 @@ class SwiftController < ApplicationController
     p params
     container =  params.require(:container)
     object = params.require(:object)
-    object = object+params.require(:format)
+    object = object+"."+params.require(:format)
     p container
     p object
     dir = @@service.directories.get container
