@@ -98,12 +98,12 @@ class SwiftController < ApplicationController
       puts foo
       puts File
     
-      send_data foo
+      send_data foo , :filename => "trigger.mp3"
     
     
     p "This is what i know..!"
     
-    redirect_to :back
+    #redirect_to :back
   end
   
   def delete_object
