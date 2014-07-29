@@ -79,7 +79,10 @@ class SwiftController < ApplicationController
   
   def list_objects
     p params
-    redirect_to :root
+    container =  params.require(:container)
+    object = params.require(:object)
+    send_data @@service.get_object(conainer,object)
+   # redirect_to :root
 
   end
    
