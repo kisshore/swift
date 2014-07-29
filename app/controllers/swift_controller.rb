@@ -88,7 +88,7 @@ class SwiftController < ApplicationController
     obj = dir.files.get(object)
     p dir
     p obj
-    send_data @@service.get_object(container,object)
+    send_data @@service.get_object(container,object).body
    # redirect_to :root
 
   end
