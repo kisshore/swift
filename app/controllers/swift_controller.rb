@@ -81,7 +81,7 @@ class SwiftController < ApplicationController
     p params
     container =  params.require(:container)
     object = params.require(:object)
-    send_data @@service.get_object(conainer,object)
+    send_data @@service.get_object(container,object)
    # redirect_to :root
 
   end
