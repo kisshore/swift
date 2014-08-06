@@ -15,6 +15,10 @@ class SwiftController < ApplicationController
   @@service = Fog::Storage.new({:provider => 'OpenStack',:openstack_username => "swift", :openstack_api_key => "root",:openstack_auth_url  => "http://192.168.5.75:5000/v2.0/tokens", :openstack_tenant => "service" })
     @auth_token= @@service.instance_values["auth_token"]
     
+   conn = Mongo::Connection::new
+    @@db = conn.db("swift_development")
+    @@coll = @@db.collection("metadata")
+    @@coll.create_index({"$**" => "text"})
     list_containers
     
   end
@@ -80,7 +84,10 @@ class SwiftController < ApplicationController
     p f=  @obj_file["obj"]    
     metadata["original_filename"] = f.original_filename
     metadata["content_type"] = f.content_type
+    
+    
     h = container.files.create :key => f.original_filename, :body=>f
+    id = @@coll.insert(metadata)
     p h 
     if(h)
       #write code to insert object name, meta data into MongoDb collections.
