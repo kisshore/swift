@@ -9,9 +9,10 @@ class SwiftController < ApplicationController
   KEYSTONE_URL = "http://192.168.5.75:5000/v2.0/tokens"
   SWIFT_URL = "http://192.168.5.75:8080/v1/AUTH_8e3870634f9748368c04e91cf379e5f7"
   
+  
+  
   def generate_token
   @@service = Fog::Storage.new({:provider => 'OpenStack',:openstack_username => "swift", :openstack_api_key => "root",:openstack_auth_url  => "http://192.168.5.75:5000/v2.0/tokens", :openstack_tenant => "service" })
-    
     @auth_token= @@service.instance_values["auth_token"]
     
     list_containers
@@ -24,7 +25,6 @@ class SwiftController < ApplicationController
     p @@service
     @containers = Array.new
     @objects = Hash.new
-    
     @@service.directories.each do |container|
       @containers.push(container.key)
     end
@@ -60,15 +60,26 @@ class SwiftController < ApplicationController
   end
   
   def create_object
+    
     puts params
-   
+     
+    meta_hash = params.require(:meta)
+    metadata = Hash.new
+    (1..((meta_has.count)*0.5)).each do |x|
+      metadata[meta_hash["name_"+x.to_s]] = meta_hash["value_"+x.to_s]
+    end
+    
     p @@service
     
     @cont_name = params.require(:container_name)
+    metadata["container_name"] = @cont_name
+    metadata["object_name"] = params.requre(:object_name)
+   
     container = @@service.directories.get @cont_name
       @obj_file = params.require(:drum).permit(:obj)
     p f=  @obj_file["obj"]    
-    
+    metadata["original_filename"] = f.original_filename
+    metadata["content_type"] = f.content_type
     h = container.files.create :key => f.original_filename, :body=>f
     p h 
     if(h)
