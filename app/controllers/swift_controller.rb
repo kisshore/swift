@@ -69,7 +69,7 @@ class SwiftController < ApplicationController
      
     meta_hash = params.require(:meta)
     metadata = Hash.new
-    (1..((meta_has.count)*0.5)).each do |x|
+    (1..((meta_hash.count)*0.5)).each do |x|
       metadata[meta_hash["name_"+x.to_s]] = meta_hash["value_"+x.to_s]
     end
     
