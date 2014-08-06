@@ -3,6 +3,7 @@ class SwiftController < ApplicationController
   require "json"
   require 'net/ping'
   require 'fog'
+  require 'mongo'
   
   
   KEYSTONE_URL = "http://192.168.5.75:5000/v2.0/tokens"
@@ -66,12 +67,15 @@ class SwiftController < ApplicationController
     @cont_name = params.require(:container_name)
     container = @@service.directories.get @cont_name
       @obj_file = params.require(:drum).permit(:obj)
-    p f=  @obj_file["obj"]
-    p f
-    
+    p f=  @obj_file["obj"]    
     
     h = container.files.create :key => f.original_filename, :body=>f
     p h 
+    if(h)
+      #write code to insert object name, meta data into MongoDb collections.
+    end
+    
+    
     redirect_to :back
   end
     

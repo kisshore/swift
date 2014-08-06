@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   
   get "/list_objects/:container/:object" => "swift#list_objects"
 
+  
+  get '/search' => 'search#index'
+  post "/search" =>'search#search'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

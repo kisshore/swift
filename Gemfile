@@ -21,7 +21,10 @@ gem 'httparty'
 gem 'httmultiparty'
 gem 'fog'
 gem 'openstack-swift', '~> 0.2.1'
-gem "mongoid", "~> 4.0.0"
+#gem "mongoid", "~> 4.0.0"
+gem 'mongo', "~> 1.8.0"
+#gem  "bson_ext"
+#gem 'mongoid_search'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
