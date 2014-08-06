@@ -77,7 +77,7 @@ class SwiftController < ApplicationController
     
     @cont_name = params.require(:container_name)
     metadata["container_name"] = @cont_name
-    metadata["object_name"] = params.requre(:object_name)
+    metadata["object_name"] = params.require(:object_name)
    
     container = @@service.directories.get @cont_name
       @obj_file = params.require(:drum).permit(:obj)
