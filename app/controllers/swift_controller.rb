@@ -49,6 +49,13 @@ class SwiftController < ApplicationController
     puts "************************************ Creating Container *************"
     c_name = params.permit(:container_name)
     p c_name = c_name["container_name"]
+    
+    metadata = Hash.new
+    metadata["container_name"] = c_name
+    metadata["component_type"] = "container"
+     id = @@coll.insert(metadata)
+    p id
+    
     p @@service
     @@service.directories.create :key => c_name
     list_containers
@@ -86,10 +93,11 @@ class SwiftController < ApplicationController
     p f=  @obj_file["obj"]    
     metadata["original_filename"] = f.original_filename
     metadata["content_type"] = f.content_type
-    
+    metadata["component_type"] = "object"
     
     h = container.files.create :key => f.original_filename, :body=>f
     id = @@coll.insert(metadata)
+    p id
     p h 
     if(h)
       #write code to insert object name, meta data into MongoDb collections.

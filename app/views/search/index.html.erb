@@ -1,5 +1,52 @@
-<%= form_tag do %>
-<%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag("Search") %>
-<%end%>
+  <br/><br/>
+  <div class="row"><!--Search bar-->
+
+    <div class="col-md-9 col-md-offset-1">
+      <div class="well bs-component">
+         <%= form_tag({:action => "index"},{:class => "form-horizontal"} ) do %>
+        <div class="form-group">
+          <div class="col-lg-10">
+        <%= text_field_tag(:q,nil,class: "form-control") %>
+            </div>
+        <%= submit_tag("Search",class: "col-2 control-label") %>
+          </div>
+      <%end%>
+           </div>
+     </div>
+  </div><!-- Row ending -->
+  <div class = "row">
+    <div class="col-md-9 col-md-offset-1">
+      
+      <h4><span class="label label-info"><b>Search Results :</b></span></h4>
+</div>
+    </div>
+
+  <div class = "row">
+    <div class="col-md-9 col-md-offset-1">
+    <%if @results%>
+    <div class="panel-group" id="accordion">
+      <%@results.each_with_index do |x,index| %>
+     <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <div class = "row" >
+            <div class="col-md-6">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse_<%=index%>"> <%= x["name"]%> </a>
+              </div><div class="col-md-2 col-md-offset-4">
+          <button type="button" class="btn btn-primary btn-xs">Download</button>
+            </div>
+           </div> 
+        </h4>
+      </div>
+      <div id="collapse_<%=index%>" class="panel-collapse collapse in">
+        <div class="panel-body">
+          Party : <%= x['party']  %>
+          Content Type: <%= x['component_type']%>
+        </div>
+      </div>
+      <%end%>
+       </div>
+    <%else%>
+    <%end%>
+  </div>
+      </div>
