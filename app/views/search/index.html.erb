@@ -44,7 +44,7 @@
            
           <div id="collapse_<%=index%>" class="panel-collapse collapse in">
                 <div class="panel-body">
-                  <%x.each_with_index do |key,value,index|%>
+                  <%x.each do |key,value|%>
                     <div class="row" >
                       <div class="col-md-6">
                         <span class="label label-info"><b><%= key %></b></span> <%= value %>
@@ -55,7 +55,7 @@
             </div>
            <%end%>
     <%else%>
-        <h3> Sorry, No results to display! </h3>
+        
     <%end%>
   </div>
       </div>
