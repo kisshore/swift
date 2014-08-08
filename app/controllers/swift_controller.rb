@@ -19,8 +19,8 @@ class SwiftController < ApplicationController
     @@db = conn.db("swift_development")
     @@coll = @@db.collection("metadata")
     @@coll.create_index({"$**" => "text"})
-    list_containers
-    
+    #list_containers
+    redirect_to dashboard
   end
   
   
