@@ -10,13 +10,16 @@
 <% end %>
 
 <div class="row">
-  <div class="col-md-4 col-md-offset-3 ">
+  <div class="col-md-4 col-md-offset-1">
     <a href="/create_token" class="btn btn-success btn-small btn-block">Create a test token</a>
+  </div>
+  <div class="col-md-5 ">
+    <a href="/search" class="btn btn-success btn-small btn-block">Go to Search</a>
   </div>
 </div>
 <br/><br/>
 
-<%= @containers%>
+
 <% if @containers.count >0 %>
 
 <div class="row">
