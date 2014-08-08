@@ -20,7 +20,7 @@ class SwiftController < ApplicationController
     @@coll = @@db.collection("metadata")
     @@coll.create_index({"$**" => "text"})
     #list_containers
-    redirect_to dashboard
+    redirect_to dashboard_url
   end
   
   
