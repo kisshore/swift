@@ -30,18 +30,23 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <div class = "row" >
-            <div class="col-md-6">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse_<%=index%>"> <%= x["name"]%> </a>
-              </div><div class="col-md-2 col-md-offset-4">
-          <button type="button" class="btn btn-primary btn-xs">Download</button>
+            <div class="col-md-5">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse_<%=index%>"> <%= x["original_filename"]%> </a>
+              </div>
+             <div class="col-md-3">
+               <%= x["object_name"]%>
+            </div>
+            <div class="col-md-2">
+            <button type="button" class="btn btn-primary btn-xs">Download</button>
             </div>
            </div> 
         </h4>
       </div>
       <div id="collapse_<%=index%>" class="panel-collapse collapse in">
         <div class="panel-body">
-          Party : <%= x['party']  %>
-          Content Type: <%= x['component_type']%>
+          <%x.each do |key,value|%>
+          <%= key %> : <%= value %>
+          <%end%>
         </div>
       </div>
       <%end%>

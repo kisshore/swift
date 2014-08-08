@@ -73,7 +73,6 @@ class SwiftController < ApplicationController
   def create_object
     
     puts params
-     
     meta_hash = params.require(:meta)
     metadata = Hash.new
     (0..((meta_hash.count)*0.5)).each do |x|
