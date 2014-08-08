@@ -32,17 +32,17 @@ class SwiftController < ApplicationController
     @@service.directories.each do |container|
       @containers.push(container.key)
     end
-    
-    
-    p @containers
-    
+   p @containers
     @containers.each do |c|
       cont = @@service.directories.get c
       @objects[c] = cont.files
     end
     
+    respond_to do |format|
+      format.html {render "dashboard"}
+    end
     
-    render "dashboard"
+ #   render "dashboard"
   end
   
   def create_container
