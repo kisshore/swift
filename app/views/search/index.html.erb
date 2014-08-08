@@ -24,6 +24,7 @@
   <div class = "row">
     <div class="col-md-9 col-md-offset-1">
     <%if @results%>
+      <%if @results.count> 0%>
     <div class="panel-group" id="accordion">
       <%@results.each_with_index do |x,index| %>
          <div class="panel panel-default">
@@ -46,14 +47,23 @@
                 <div class="panel-body">
                   <%x.each do |key,value|%>
                     <div class="row" >
-                      <div class="col-md-6">
-                        <span class="label label-info"><b><%= key %></b></span> <%= value %>
+                      <div class="col-md-4">
+                      <b><%= key %></b> 
+                      </div>
+                      <div class= "col-md-1">
+                        :
+                        </div>
+                      <div class="col-md-6" >
+                        <%= value %>
                       </div>
                     </div><!-- results tow-->
                   <%end%><!-- end for kvi table -->
                 </div><!---pannel body-->
             </div>
            <%end%>
+           <%else%> <!-- count is greater than zero--->
+           <h4> Sorry, No result's to display! Please modify keyword and search! </h4>
+           <%end%>           
     <%else%>
         
     <%end%>
