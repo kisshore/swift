@@ -103,7 +103,7 @@ class SwiftController < ApplicationController
     end
     
     
-    redirect_to :back
+    redirect_to dashboard_url
   end
     
    
